@@ -1,4 +1,4 @@
-package utils;
+package com.immoc.sell.utils;
 
 import com.immoc.sell.vo.ResultVo;
 
