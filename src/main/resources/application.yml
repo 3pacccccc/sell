@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.80.130/sell?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+server:
+  context-path: /sell # 会在所有url的最前部加上/sell
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+#  path: /log/  # 配置路径 默认为文件夹,此目录在D:/log/spring.log
+#  level:
+#    com.imooc.LoggerTest: debug  # 可以指定日志的级别，甚至可以指定具体类的级别
+#  file:/log/sell.log
