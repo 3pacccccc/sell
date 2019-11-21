@@ -13,6 +13,8 @@ public class OrderDetail {
     @Id
     private String detailId;
 
+    private String orderId; // 订单ID
+
     private String productId; // 商品Id
 
     private String productName; //商品名称
