@@ -1,16 +1,17 @@
 package com.immoc.sell.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.immoc.sell.dataobject.OrderDetail;
-import com.immoc.sell.enums.OrderStatusEnum;
-import com.immoc.sell.enums.PayStatusEnum;
+import com.immoc.sell.utils.serializer.Date2LongSerializer;
 import lombok.Data;
 
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL) // 将结果为null的自动过滤不返回
 public class OrderDTO {
 
     private String orderId; // 订单ID
@@ -29,8 +30,10 @@ public class OrderDTO {
 
     private Integer payStatus; // 支付状态，默认为0未支付
 
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;  // 创建时间
 
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date updateTime; // 更新时间
 
     List<OrderDetail> orderDetailList;
