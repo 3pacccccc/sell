@@ -13,6 +13,7 @@ import com.immoc.sell.exception.SellException;
 import com.immoc.sell.repository.OrderDetailRepository;
 import com.immoc.sell.repository.OrderMasterRepository;
 import com.immoc.sell.service.OrderService;
+import com.immoc.sell.service.PayService;
 import com.immoc.sell.service.ProductService;
 import com.immoc.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMasterRepository orderMasterRepository;
+
+    @Autowired
+    private PayService payService;
 
     @Override
     @Transactional //使之具有事物的特性，操作一旦失败，进行回滚。
@@ -139,10 +143,8 @@ public class OrderServiceImpl implements OrderService {
 
         // 如果已经支付，需要退款
         if (orderDTO.getPayStatus().equals(PayStatusEnum.SUCCESS.getCode())) {
-            // todo
+            payService.refund(orderDTO);
         }
-
-
         return orderDTO;
     }
 
