@@ -5,21 +5,17 @@ import com.immoc.sell.enums.ResultEnum;
 import com.immoc.sell.exception.SellException;
 import com.immoc.sell.service.OrderService;
 import com.immoc.sell.service.PayService;
-import com.immoc.sell.utils.JsonUtil;
-import com.immoc.sell.utils.MathUtil;
 import com.lly835.bestpay.model.PayResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import sun.rmi.runtime.Log;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/pay")
+@RequestMapping("/templates/pay")
 @Slf4j
 public class PayController {
 
