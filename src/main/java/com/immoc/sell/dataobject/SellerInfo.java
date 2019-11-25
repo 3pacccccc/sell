@@ -12,7 +12,7 @@ public class SellerInfo {
     @Id
     private String id;
 
-    private String userName;
+    private String username;
 
     private String password;
 
