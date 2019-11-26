@@ -17,6 +17,13 @@ public class LoggerTest {
     private final Logger logger = LoggerFactory.getLogger(LoggerTest.class);
 
     @Test
+    public void debugTest(){
+        String a = "token_";
+        String b = "asretertw";
+        System.out.println(String.format(a, b));
+    }
+
+    @Test
     public void test1() {
         logger.debug("debug...");
         logger.info("info...");
