@@ -12,9 +12,7 @@ import com.immoc.sell.enums.ResultEnum;
 import com.immoc.sell.exception.SellException;
 import com.immoc.sell.repository.OrderDetailRepository;
 import com.immoc.sell.repository.OrderMasterRepository;
-import com.immoc.sell.service.OrderService;
-import com.immoc.sell.service.PayService;
-import com.immoc.sell.service.ProductService;
+import com.immoc.sell.service.*;
 import com.immoc.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -45,6 +43,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private PayService payService;
+
+    @Autowired
+    private PushMessageService pushMessageService;
+
+    @Autowired
+    private WebSocket webSocket;
 
     @Override
     @Transactional //使之具有事物的特性，操作一旦失败，进行回滚。
@@ -81,6 +85,9 @@ public class OrderServiceImpl implements OrderService {
         List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(e ->
                 new CartDTO(e.getProductId(), e.getProductQuantity())).collect(Collectors.toList());
         productService.decreaseStock(cartDTOList);
+
+        // websocket发送消息
+        webSocket.sendMessage("有新的订单");
         return orderDTO;
     }
 
@@ -167,6 +174,8 @@ public class OrderServiceImpl implements OrderService {
             throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
 
+        // 推送微信模板消息
+        pushMessageService.orderStatus(orderDTO);
         return orderDTO;
     }
 
