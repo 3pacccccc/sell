@@ -15,6 +15,7 @@ import com.immoc.sell.repository.OrderMasterRepository;
 import com.immoc.sell.service.*;
 import com.immoc.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.omg.CORBA.TIMEOUT;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,8 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class OrderServiceImpl implements OrderService {
+
+    private static final int TIMEOUT = 10 * 1000;
 
     @Autowired
     private ProductService productService;
@@ -50,9 +53,22 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private WebSocket webSocket;
 
+    @Autowired
+    private RedisLock redisLock;
+
     @Override
     @Transactional //使之具有事物的特性，操作一旦失败，进行回滚。
     public OrderDTO create(OrderDTO orderDTO) {
+//
+//         秒杀
+//         加锁
+//        long time = System.currentTimeMillis() + TIMEOUT;
+//        if (!redisLock.lock(orderDTO.getOrderId(), String.valueOf(time))){
+//            throw new SellException(101, "哎哟喂，人也太多了，换个姿势再试试？~~~");
+//        }
+//        // ........业务代码
+//        //解锁
+//        redisLock.unlock(orderDTO.getOrderId(), String.valueOf(time));
 
         BigDecimal orderAmount = new BigDecimal("0");
         String orderId = KeyUtil.genUniqueKey();

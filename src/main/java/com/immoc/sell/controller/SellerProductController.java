@@ -11,12 +11,14 @@ import com.immoc.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/seller/product")
 @Slf4j
+//@CacheConfig(cacheNames = "product")  如果在class上面添加了这个，函数下面@Cacheable(cacheNames = "product", key = "123")中的cacheNames = "product"可以省去
 public class SellerProductController {
 
     @Autowired
@@ -39,6 +42,7 @@ public class SellerProductController {
     private CategoryService categoryService;
 
     @GetMapping("/list")
+    @Cacheable(cacheNames = "product", key = "123")
     public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") Integer page,
                              @RequestParam(value = "size", defaultValue = "10") Integer size,
                              Map<String, Object> map) {
@@ -105,6 +109,9 @@ public class SellerProductController {
 
 
     @PostMapping("/save")
+//    @CachePut(cacheNames = "product", key = "123")  //cacheput每次访问会执行方法下面的函数。结果存入到redis. cacheable则直接访问redis得到结果。不会访问函数下面的代码
+    @CacheEvict(cacheNames = "product", key = "123")
+    // CacheEvict会在删除redis对应的缓存， key如果不填默认为方法的请求参数。此处为@Valid ProductForm productForm，BindingResult bindingResult，Map<String, Object> map
     public ModelAndView save(@Valid ProductForm productForm,
                              BindingResult bindingResult,
                              Map<String, Object> map) {
