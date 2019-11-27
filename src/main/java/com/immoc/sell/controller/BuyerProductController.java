@@ -9,6 +9,7 @@ import com.immoc.sell.vo.ProductVo;
 import com.immoc.sell.vo.ResultVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,10 @@ public class BuyerProductController {
     private CategoryService categoryService;
 
     @GetMapping("/list")
+//    @Cacheable(cacheNames = "product", key = "123")  // 对这个函数使用缓存
+//    @Cacheable(cacheNames = "product", key = "#productId", condition = "#productId.length() > 3". unless = "#result.getCode !=0 ")
+//    key可以动态配置：SPEL表达式, condition表达式后面成立的时候才会缓存
+//    unless表示当ResultVo的code不为0的时候，才进行缓存
     public ResultVo list() {
         // 查询所有的上架商品
         List<ProductInfo> productInfoList = productService.findUpAll();

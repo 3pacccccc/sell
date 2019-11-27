@@ -4,10 +4,17 @@ spring:
     username: root
     password: 123456
     url: jdbc:mysql://192.168.80.130/sell?characterEncoding=utf-8&useSSL=false
+#    url: jdbc:mysql://192.168.174.129/sell?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
+  redis:
+#    host: 192.168.174.129
+    host: 192.168.80.130
+#  jackson:
+#    default-property-inclusion: non_null   全局配置过滤掉返回为null'的字段
 server:
   context-path: /sell # 会在所有url的最前部加上/sell
+
 #logging:
 #  pattern:
 #    console: "%d - %msg%n"
@@ -15,3 +22,18 @@ server:
 #  level:
 #    com.imooc.LoggerTest: debug  # 可以指定日志的级别，甚至可以指定具体类的级别
 #  file:/log/sell.log
+
+wechat:
+  mpAppId: wx0be1e1549c033f06
+  mpAppSecret: 761f5d4128fac7f21e83298383eaecf9
+  openAppId: qqq
+  openAppSecret: aaa
+  mchId: saerweeew
+  mchKey: eq4646qwer
+  keyPath: /config/h5.p12
+  notifyUrl: http://maruimin.natapp1.cc/sell/pay/notify
+
+projectUrl:
+  wechatMpAuthorize: aaa
+  wechatOpenAuthorize: bbb
+  sell: http://maruimin.natapp1.cc

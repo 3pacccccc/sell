@@ -3,7 +3,7 @@ package com.immoc.sell.enums;
 import lombok.Getter;
 
 @Getter // 可以不用写get方法
-public enum ProductStatusEnum {
+public enum ProductStatusEnum implements CodeEnum{
     // 商品状态枚举
     UP(0, "在架"),
     DOWN(1, "下架");

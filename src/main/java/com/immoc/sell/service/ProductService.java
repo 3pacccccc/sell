@@ -1,6 +1,7 @@
 package com.immoc.sell.service;
 
 import com.immoc.sell.dataobject.ProductInfo;
+import com.immoc.sell.dto.CartDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,5 +17,11 @@ public interface ProductService {
 
     ProductInfo save(ProductInfo productInfo);
 
-    // todo 加库存，减库存
+    void increaseStock(List<CartDTO> cartDTOList);  //加库存
+
+    void decreaseStock(List<CartDTO> cartDTOList); //减库存
+
+    ProductInfo onSale(String productId); //商品上架
+
+    ProductInfo offSale(String productId); //商品下架
 }

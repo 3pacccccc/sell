@@ -1,7 +1,9 @@
 package com.immoc.sell.exception;
 
 import com.immoc.sell.enums.ResultEnum;
+import lombok.Getter;
 
+@Getter
 public class SellException extends RuntimeException {
 
     private Integer code;
@@ -9,5 +11,10 @@ public class SellException extends RuntimeException {
     public SellException(ResultEnum resultEnum){
         super(resultEnum.getMessage());
         this.code = resultEnum.getCode();
+    }
+
+    public SellException(Integer code, String message){
+        super(message);
+        this.code = code;
     }
 }
